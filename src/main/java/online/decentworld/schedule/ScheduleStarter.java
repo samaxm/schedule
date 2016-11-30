@@ -2,8 +2,9 @@ package online.decentworld.schedule;
 
 import online.decentworld.rdb.config.DBConfig;
 import online.decentworld.schedule.config.ScheduleConfig;
-import online.decentworld.schedule.task.RestoreChatRecordsFromRedis2Hbase;
+import online.decentworld.schedule.task.OnlineNumRecordJob;
 import online.decentworld.tools.DateFormater;
+import org.quartz.Job;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -34,6 +35,10 @@ public class ScheduleStarter {
         ctx.refresh();
     }
 
+    public Job getJob(String jobName){
+        return (Job) ctx.getBean(jobName);
+    }
+
     public SchedulerTaskManager getSchedulerTaskManager(){
         return (SchedulerTaskManager) ctx.getBean("schedulerTaskManager");
     }
@@ -47,7 +52,7 @@ public class ScheduleStarter {
             throw new Exception("[START_FAILED]");
         }
         //TODO:get job list from table or properties file
-        manager.addTask(RestoreChatRecordsFromRedis2Hbase.class,"0/60 * * * * ?");
+        manager.addTask(OnlineNumRecordJob.class,"0/60 * * * * ?");
 //        manager.addTask(TestJob.class,"0/20 * * * * ?");
         manager.start();
     }

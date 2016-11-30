@@ -1,27 +1,30 @@
-import online.decentworld.rdb.hbase.HbaseClient;
 import online.decentworld.tools.MD5;
-import org.apache.hadoop.hbase.client.Result;
+import org.quartz.JobExecutionException;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
  * Created by Sammax on 2016/11/22.
  */
 public class Common{
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        Class.forName("org.apache.hadoop.hbase.util.ByteStringer");
-        Calendar calendar = Calendar.getInstance();
-        String chat_table_prefix="chat";
-        String records_cf="records";
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
-        byte[] rowkey = getRowKey("123", "456", month, year);
-        HbaseClient client=HbaseClient.instance();
-        String subfix = String.valueOf(year) + String.valueOf(month);
+    public static void main(String[] args) throws IOException, ClassNotFoundException, JobExecutionException {
+        Calendar calendar=Calendar.getInstance();
+        SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHH");
 
-        Result result= client.get((chat_table_prefix + subfix).getBytes(), rowkey);
-        System.out.println("123");
+        String rowkey=format.format(calendar.getTime());
+        String colume=String.valueOf(calendar.get(Calendar.MINUTE));
+        System.out.println(rowkey+colume);
+//        TextChatMessage textChatMessage=new TextChatMessage(ChatStatus.NORMAL,"100",
+//                "wlker", ChatRelation.STRANGER,"777","666","helloworld");
+//        MessageWrapper messageWrapper=MessageWrapper.createMessageWrapper("777","666",textChatMessage,1);
+//        SimpleProtosCodec codec= new SimpleProtosCodec();
+//        codec.setConverterFactory(new ReflectConverterFactory());
+//        byte[] data=codec.encode(messageWrapper);
+//        HbaseClient.instance().put((HTableHelper.CHAT_PREFIX+"201610").getBytes(),getRowKey("777","666",10,2016),HTableHelper.CHAT_COLUMN_RECORD.getBytes(),"123".getBytes(),data);
+//        HbaseClient.instance().close();
+
     }
 
     private static byte[] getRowKey(String from,String to,int month,int year){
