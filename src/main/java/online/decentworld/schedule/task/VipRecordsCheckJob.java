@@ -51,7 +51,7 @@ public class VipRecordsCheckJob {
             page++;
         }while (list.size()!=pageAmount);
         try {
-            userMapper.batchChangeUserType(expireList, UserType.UNCERTAIN.name());
+            userMapper.batchChangeUserType(expireList, UserType.UNCERTAIN.getName());
         }catch (Exception e){
             logger.debug("[RESET_VIP_FAIL] list#"+ LogUtil.toLogString(expireList),e);
         }

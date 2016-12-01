@@ -1,5 +1,4 @@
 import online.decentworld.tools.MD5;
-import org.quartz.JobExecutionException;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -9,7 +8,7 @@ import java.util.Calendar;
  * Created by Sammax on 2016/11/22.
  */
 public class Common{
-    public static void main(String[] args) throws IOException, ClassNotFoundException, JobExecutionException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException{
         Calendar calendar=Calendar.getInstance();
         SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHH");
 

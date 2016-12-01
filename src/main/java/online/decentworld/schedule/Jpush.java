@@ -54,8 +54,11 @@ public class Jpush {
 
     public void pushOnlineNotice(){
         try {
-            PushPayload load= createNoticeByTag(NOTICE_TAG,"有用户上线来，快去碰碰运气吧！");
+            logger.debug("[pushing online notice]");
+            PushPayload load= createAndroidNoticeByTag(NOTICE_TAG, "有用户上线来，快去碰碰运气吧！");
             jpushClient.sendPush(load);
+            PushPayload load2= createIOSNoticeByTag(NOTICE_TAG,"有用户上线来，快去碰碰运气吧！");
+            jpushClient.sendPush(load2);
         } catch (Exception e) {
             logger.warn("",e);
         }
@@ -76,16 +79,23 @@ public class Jpush {
         return payload;
     }
 
-    private PushPayload createNoticeByTag(String tag,String message){
+    private PushPayload createAndroidNoticeByTag(String tag,String message){
         PushPayload payload=PushPayload.newBuilder()
                 .setPlatform(Platform.android_ios())
                 .setAudience(Audience.tag(tag))
-                .setNotification(Notification.newBuilder()
-                        .addPlatformNotification(IosNotification.newBuilder()
-                                .setAlert(message)
-                                .setBadge(1)
-                                .setSound(DEFAULT_SOUND)
-                                .build())
+                .setNotification(Notification.android(message, "上线提醒", null))
+                .build();
+        return payload;
+    }
+
+    private PushPayload createIOSNoticeByTag(String tag,String message){
+        PushPayload payload=PushPayload.newBuilder()
+                .setPlatform(Platform.ios())
+                .setAudience(Audience.tag(tag))
+                .setNotification(Notification.newBuilder().addPlatformNotification(IosNotification.newBuilder()
+                        .setAlert(message)
+                        .setBadge(1).addExtra("from", "decentworld")
+                        .setSound("happy").build())
                         .build())
                 .build();
         return payload;
@@ -104,8 +114,10 @@ public class Jpush {
 
 
     public static void main(String[] args) {
-//        Jpush jpush=new Jpush();
-//        LikeMessageBody body=new LikeMessageBody("http://dev.service.dawan.online/group1/M00/00/13/cEodc1gqbVeASc0TAADKuGWfeGA824.jpg","吓跑鱼","1845581884","1851236884","男");
+        Jpush jpush=new Jpush();
+        jpush.pushOnlineNotice();
+//        LikeMessageBody body=n
+// ew LikeMessageBody("http://dev.service.dawan.online/group1/M00/00/13/cEodc1gqbVeASc0TAADKuGWfeGA824.jpg","吓跑鱼","1845581884","1851236884","男");
 //        MessageWrapper messageWrapper=MessageWrapper.createMessageWrapper("1845581884","1851236884",body,0);
 //        System.out.println(com.alibaba.fastjson.JSON.toJSONString(messageWrapper));
 //        jpush.pushMessage("3469464206",MessageType.NOTICE_LIKE, com.alibaba.fastjson.JSON.toJSONString(messageWrapper));

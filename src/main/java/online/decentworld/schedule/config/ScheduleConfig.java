@@ -1,7 +1,9 @@
 package online.decentworld.schedule.config;
 
+import online.decentworld.rdb.config.DBConfig;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -10,6 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableScheduling
 @ComponentScan(basePackages={"online.decentworld.schedule.*"})
+@Import(DBConfig.class)
 public class ScheduleConfig {
 
 
