@@ -8,8 +8,6 @@ import online.decentworld.rdb.hbase.HbaseClient;
 import online.decentworld.rdb.hbase.PutRequest;
 import online.decentworld.rpc.dto.message.protos.MessageProtos;
 import online.decentworld.tools.HbaseRowKeyHelper;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +20,12 @@ import java.util.List;
 import java.util.Set;
 
 
-public class RestoreChatRecordsFromRedis2Hbase implements Job{
+public class RestoreChatRecordsFromRedis2Hbase {
 
     private static Logger logger= LoggerFactory.getLogger(RestoreChatRecordsFromRedis2Hbase.class);
-;
 
-    @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+
+    public void execute() throws JobExecutionException {
         logger.debug("[BEGIN_CHAT_RECORD_PERSIST_TASK]");
         RedisTemplate template=new RedisTemplate();
         ReturnResult result=template.cache((Jedis jedis)->{

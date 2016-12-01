@@ -3,11 +3,11 @@ package online.decentworld.schedule.task;
 import online.decentworld.cache.redis.ApplicationInfoCache;
 import online.decentworld.rdb.hbase.HbaseClient;
 import online.decentworld.schedule.Jpush;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,18 +15,20 @@ import java.util.Calendar;
 /**
  * Created by Sammax on 2016/11/26.
  */
-public class OnlineNumRecordJob implements Job {
-
-    private ApplicationInfoCache applicationInfoCache=new ApplicationInfoCache();
-    private Jpush jpush=new Jpush();
+@Component
+public class OnlineNumRecordJob{
+    @Autowired
+    private ApplicationInfoCache applicationInfoCache;
+    @Autowired
+    private Jpush jpush;
     private boolean isZero=false;
     private static SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHH");
     private static Logger logger= LoggerFactory.getLogger(OnlineNumRecordJob.class);
     private static String ONLINE_NUM_TABLE="ONLINE_NUM_TABLE_2016";
     private static String COLUMN_FAMILY="ONLINENUM";
 
-    @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    @Scheduled(cron = "0 * * * * *")
+    public void execute(){
         try {
             long currentOnline=applicationInfoCache.checkOnline();
             if(currentOnline==0){

@@ -2,7 +2,6 @@ package online.decentworld.schedule;
 
 import online.decentworld.rdb.config.DBConfig;
 import online.decentworld.schedule.config.ScheduleConfig;
-import online.decentworld.schedule.task.OnlineNumRecordJob;
 import online.decentworld.tools.DateFormater;
 import org.quartz.Job;
 import org.slf4j.Logger;
@@ -39,21 +38,11 @@ public class ScheduleStarter {
         return (Job) ctx.getBean(jobName);
     }
 
-    public SchedulerTaskManager getSchedulerTaskManager(){
-        return (SchedulerTaskManager) ctx.getBean("schedulerTaskManager");
-    }
 
     public static void main(String[] args) throws Exception {
         logger.debug("[Start Schedule Jobs] time#"+ DateFormater.formatReadableString(new Date()));
         ScheduleStarter starter=new ScheduleStarter();
         starter.init();
-        SchedulerTaskManager manager=starter.getSchedulerTaskManager();
-        if(manager==null){
-            throw new Exception("[START_FAILED]");
-        }
-        //TODO:get job list from table or properties file
-        manager.addTask(OnlineNumRecordJob.class,"0/60 * * * * ?");
-//        manager.addTask(TestJob.class,"0/20 * * * * ?");
-        manager.start();
+
     }
 }

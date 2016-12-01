@@ -122,6 +122,11 @@
         </dependency>
         <dependency>
             <groupId>online.decentworld</groupId>
+            <artifactId>tools</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>online.decentworld</groupId>
             <artifactId>rpc</artifactId>
             <version>0.0.1</version>
         </dependency>
@@ -176,11 +181,11 @@
             <artifactId>spring-data-redis</artifactId>
             <version>1.7.2.RELEASE</version>
         </dependency>
-        <dependency>
+  <!--      <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>2.2.3</version>
-        </dependency>
+        </dependency>-->
         <!-- hbase -->
         <!--<dependency>-->
             <!--<groupId>org.apache.hbase</groupId>-->

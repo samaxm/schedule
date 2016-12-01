@@ -12,9 +12,10 @@ import cn.jpush.api.push.model.notification.Notification;
 import online.decentworld.rpc.dto.message.types.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 
-
+@Component
 public class Jpush {
 
 //  private String masterSecret="42233e4f5db1de69eaecd10e";
