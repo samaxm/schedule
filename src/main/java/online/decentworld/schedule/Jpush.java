@@ -55,9 +55,9 @@ public class Jpush {
     public void pushOnlineNotice(){
         try {
             logger.debug("[pushing online notice]");
-            PushPayload load= createAndroidNoticeByTag(NOTICE_TAG, "有用户上线来，快去碰碰运气吧！");
+            PushPayload load= createAndroidNoticeByTag(NOTICE_TAG, "有用户上线来，速来围观！");
             jpushClient.sendPush(load);
-            PushPayload load2= createIOSNoticeByTag(NOTICE_TAG,"有用户上线来，快去碰碰运气吧！");
+            PushPayload load2= createIOSNoticeByTag(NOTICE_TAG,"有用户上线来，速来围观！");
             jpushClient.sendPush(load2);
         } catch (Exception e) {
             logger.warn("",e);

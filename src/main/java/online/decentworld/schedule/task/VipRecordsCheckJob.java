@@ -1,5 +1,6 @@
 package online.decentworld.schedule.task;
 
+import online.decentworld.rdb.entity.User;
 import online.decentworld.rdb.entity.VipRecords;
 import online.decentworld.rdb.mapper.UserMapper;
 import online.decentworld.rdb.mapper.VipRecordsMapper;
@@ -9,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by Sammax on 2016/12/1.
  */
-@Component
+//@Component
 public class VipRecordsCheckJob {
 
     private static Logger logger= LoggerFactory.getLogger(VipRecordsCheckJob.class);
@@ -49,9 +49,16 @@ public class VipRecordsCheckJob {
                 }
             });
             page++;
-        }while (list.size()!=pageAmount);
+        }while (list.size()==pageAmount);
         try {
-            userMapper.batchChangeUserType(expireList, UserType.UNCERTAIN.getName());
+            if(expireList.size()>1){
+                userMapper.batchChangeUserType(expireList, UserType.UNCERTAIN.getName());
+            }else if(expireList.size()==1){
+                User user=new User();
+                user.setId(expireList.get(0));
+                user.setType(UserType.UNCERTAIN.getName());
+                userMapper.updateByPrimaryKeySelective(user);
+            }
         }catch (Exception e){
             logger.debug("[RESET_VIP_FAIL] list#"+ LogUtil.toLogString(expireList),e);
         }

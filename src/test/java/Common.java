@@ -1,20 +1,14 @@
 import online.decentworld.tools.MD5;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 /**
  * Created by Sammax on 2016/11/22.
  */
 public class Common{
     public static void main(String[] args) throws IOException, ClassNotFoundException{
-        Calendar calendar=Calendar.getInstance();
-        SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHH");
 
-        String rowkey=format.format(calendar.getTime());
-        String colume=String.valueOf(calendar.get(Calendar.MINUTE));
-        System.out.println(rowkey+colume);
+        System.out.println(System.currentTimeMillis()-10*60*1000);
 //        TextChatMessage textChatMessage=new TextChatMessage(ChatStatus.NORMAL,"100",
 //                "wlker", ChatRelation.STRANGER,"777","666","helloworld");
 //        MessageWrapper messageWrapper=MessageWrapper.createMessageWrapper("777","666",textChatMessage,1);

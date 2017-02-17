@@ -22,21 +22,22 @@ public class OnlineNumRecordJob{
     private static Logger logger= LoggerFactory.getLogger(OnlineNumRecordJob.class);
     private static String ONLINE_NUM_TABLE="ONLINE_NUM_TABLE_2016";
     private static String COLUMN_FAMILY="ONLINENUM";
-    private long lastOnlineNum=0;
-    private long lastNotifyTime=0;
-    private static long idleTime=10*60*1000;
+//    private long lastOnlineNum=0;
+//    private long lastNotifyTime=0;
+//    private static long idleTime=5*60*1000;
 
     @Scheduled(cron = "0 * * * * *")
     public void execute(){
         try {
             long currentOnline=applicationInfoCache.checkOnline();
 
-            if(currentOnline>lastOnlineNum
-                    &&((System.currentTimeMillis()-lastNotifyTime)>idleTime)){
-                jpush.pushOnlineNotice();
-            }
-            lastOnlineNum=currentOnline;
-            lastNotifyTime=System.currentTimeMillis();
+//            if(currentOnline>lastOnlineNum){
+//                if((System.currentTimeMillis()-lastNotifyTime)>idleTime){
+//                    jpush.pushOnlineNotice();
+//                    lastNotifyTime=System.currentTimeMillis();
+//                }
+//            }
+//            lastOnlineNum=currentOnline;
 
             logger.debug("recording onlineNum#"+currentOnline);
             //save to hbase
@@ -53,6 +54,11 @@ public class OnlineNumRecordJob{
         }catch (Exception e){
             logger.debug("",e);
         }
+    }
+
+
+    public static void main(String[] args) {
+//        System.out.println(System.currentTimeMillis()-0-idleTime);
     }
 
 
